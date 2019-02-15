@@ -6,7 +6,7 @@ import Quiz from "./quiz";
 import images from "./imgpath";
 
 class App extends Component {
-  state = { imageList: images };
+  state = { imageList: images, answers: {} };
 
   render() {
     const { imageList } = this.state;

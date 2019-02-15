@@ -38,14 +38,13 @@ div.container {
   box-sizing: border-box;
 }
 
-input {
+.userInput {
   max-width: 500px;
   width: 100%;
   height: 40px;
   margin: 40px 0px 40px 0px;
   font-size: 16px;
-  border: 5px soid;
-  box-sizing: border-box;
+  border: 5px soid rgb(79, 65, 155);
 }
 
 .back-btn,
@@ -72,4 +71,21 @@ input {
 .App .form-container .input-btn .next-btn {
   float: right;
   margin-right: 100px;
+}
+
+@media screen and (max-width: 375px) {
+  .App .form-container .input-btn .back-btn {
+    float: left;
+    margin-left: 0%;
+  }
+  .App .form-container .input-btn .next-btn {
+    float: right;
+    margin-left: 0%;
+  }
+
+  .App .form-container .image {
+    height: 100%;
+    width: 100%;
+    margin: 180px 0px 50px 0px;
+  }
 }

@@ -59,7 +59,7 @@ class Quiz extends Component {
       this.props.history.push(path);
     }
 
-    // didnt implement the linking of answer
+    // didnt implement the linking of answer yet
   };
 
   // Handle the input change and update the state
@@ -87,7 +87,7 @@ class Quiz extends Component {
             <input
               className="userInput"
               type="text"
-              //value={this.state.currentAnswer} need to use ref
+              value={this.props.currentAnswer}
               onChange={e => this.handleInputChange(e)}
               ref={this._input}
             />

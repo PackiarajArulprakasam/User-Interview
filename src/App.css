@@ -1,0 +1,75 @@
+.App {
+  text-align: center;
+}
+
+div.container {
+  position: relative;
+}
+
+.form-container {
+  position: absolute;
+  max-width: 700px;
+  width: 100%;
+  height: 90%;
+  border: 5px solid rgb(199, 131, 199);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.image {
+  height: 100px;
+  width: 100px;
+  margin: 180px 0px 50px 0px;
+  position: relative;
+}
+
+.div.input-btn {
+  max-width: 700px;
+  position: relative;
+}
+
+.div.input-btn.question {
+  max-width: 500px;
+  height: 40px;
+  width: 100%;
+  margin-right: 0px;
+  background-color: pink;
+  box-sizing: border-box;
+}
+
+input {
+  max-width: 500px;
+  width: 100%;
+  height: 40px;
+  margin: 40px 0px 40px 0px;
+  font-size: 16px;
+  border: 5px soid;
+  box-sizing: border-box;
+}
+
+.back-btn,
+.next-btn {
+  height: 40px;
+  width: 80px;
+  border-radius: 3px;
+  position: relative;
+}
+.back-btn {
+  background-color: rgb(233, 179, 179);
+  border: 5px solid indianred;
+}
+
+.next-btn {
+  background-color: rgb(181, 238, 181);
+  border: 5px solid rgb(75, 161, 75);
+}
+
+.App .form-container .input-btn .back-btn {
+  float: left;
+  margin-left: 100px;
+}
+.App .form-container .input-btn .next-btn {
+  float: right;
+  margin-right: 100px;
+}

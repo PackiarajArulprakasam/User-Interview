@@ -1,148 +1,122 @@
 import React, { Component } from "react";
-import { questions } from "./questions";
+import { questions, getQuestion, saveAnswer } from "./data/questions";
+import DisplayQuestion from "./components/questions";
+import DisplayAnswer from "./components/answer";
+import DisplayImage from "./components/image";
 
 class Quiz extends Component {
   constructor(props) {
     super(props);
     this._input = React.createRef();
-    this.state = {
-      questions: [],
-      currQuestionNum: this.props.currQuestionNum,
-      currentAnswer: "",
-      image: this.props.image
-    };
   }
 
+  state = {
+    imageIndex: 0,
+    question: "",
+    answer: "",
+    questionIndex: 0,
+    totalQuestions: 0
+  };
+
   componentDidMount() {
-    this.setState({ questions });
-    //if (this.props.match.path !== "/result") this._input.current.focus();
-    //Outstanding issue with auto foucs, since the question page is ummounted,
-    //the ref is set to null - Probably should used same render and conditionally
-    //render the input, questions instead of breaking into two render methods;
+    //set the total number of questions
+    const totalQuestions = questions.length;
+
+    //get the first question and answer
+    const data = getQuestion(this.state.questionIndex);
+    const question = data.content;
+    const answer = data.answer;
+
+    this.setState({ ...this.state, question, answer, totalQuestions });
   }
+
+  displaySummary = () => {
+    return this.props.history.push({
+      pathname: "/summary"
+    });
+  };
 
   handleNext = e => {
     e.preventDefault();
 
-    //copy the questions array
-    let questions = [...this.state.questions];
+    //Save the answer
+    saveAnswer(this.state.questionIndex, this.state.answer);
 
-    //update the answer for the specific question
-    let foundIndex = questions.findIndex(
-      q => questions.indexOf(q) === this.props.currQuestionNum
-    );
-    // has issue when the input is not updated
-    questions[foundIndex].answer = this.state.currentAnswer;
+    //Increment the question index to show the next question
+    const questionIndex = this.state.questionIndex + 1;
 
-    //update the state
-    this.setState({ ...this.state, questions });
-
-    //check if end of question list and route to result page
-    if (this.props.currQuestionNum < questions.length - 1) {
-      let path = `/question${this.props.currQuestionNum + 1}`;
-      return this.props.history.push(path);
-    } else {
-      return this.props.history.push({
-        pathname: "/result",
-        state: { detail: this.state.questions }
+    //Update the state with next question, answer, next Question index , next image index
+    if (questionIndex < this.state.totalQuestions) {
+      const data = getQuestion(questionIndex);
+      const question = data.content;
+      const answer = data.answer;
+      const imageIndex = this.state.imageIndex + 1;
+      this.setState({
+        ...this.state,
+        question,
+        answer,
+        questionIndex,
+        imageIndex
       });
     }
+
+    //if the user sumbitted the last question then set the showSummary to true
+    else this.displaySummary();
   };
 
   handleBack = e => {
     e.preventDefault();
-
-    const questions = [...this.state.questions];
-
-    if (this.props.currQuestionNum >= 1) {
-      let path = `/question${this.props.currQuestionNum - 1}`;
-      this.props.history.push(path);
+    const FIRST_INDEX = 0;
+    const questionIndex = this.state.questionIndex - 1;
+    console.log("back questionIndex", questionIndex);
+    if (questionIndex >= FIRST_INDEX) {
+      const data = getQuestion(questionIndex);
+      const question = data.content;
+      const answer = data.answer;
+      this.setState({ ...this.state, question, answer, questionIndex });
     }
-
-    // didnt implement the linking of answer yet
+    console.log("Back button");
   };
 
-  // Handle the input change and update the state
-  handleInputChange = e => {
-    const currentAnswer = e.target.value;
-    this.setState({ currentAnswer });
-  };
-
-  //Display page for questions
-  displayQuestion = q => {
-    const { userInput } = this.state;
-
-    //get the image
-    const logo = require("" + this.props.image);
-
-    //hide back button for first question
-    let backButtonDisplay = this.props.currQuestionNum === 0 ? "none" : "";
-
-    return (
-      <div key={q.id}>
-        <form className="form-container">
-          <img className="image" src={logo} alt="#" />
-          <div className="input-btn">
-            <div className="question">{q.content}</div>
-            <input
-              className="userInput"
-              type="text"
-              value={this.props.currentAnswer}
-              onChange={e => this.handleInputChange(e)}
-              ref={this._input}
-            />
-            <br />
-            <button
-              className="back-btn"
-              style={{ display: backButtonDisplay }}
-              onClick={e => this.handleBack(e)}
-            >
-              Back
-            </button>
-            <button className="next-btn" onClick={e => this.handleNext(e)}>
-              Next
-            </button>
-          </div>
-        </form>
-      </div>
-    );
-  };
-
-  //Display page for results
-  displayResult = () => {
-    const logo = require("" + this.props.image);
-    return (
-      <div className="form-container">
-        <form>
-          <img className="image" src={logo} alt="#" />
-          <div className="result">
-            {questions.map(q => (
-              <li key={q.id}>
-                {q.content} {q.answer}
-              </li>
-            ))}
-          </div>
-        </form>
-      </div>
-    );
+  handleAnswer = e => {
+    const answer = e.target.value;
+    this.setState({ ...this.state, answer });
   };
 
   render() {
-    const { questions } = this.state;
-    let currQuestion = questions.filter(
-      q => questions.indexOf(q) === this.props.currQuestionNum
-    );
+    const { questionIndex } = this.state;
+    console.log("question Index", questionIndex);
+    return (
+      <div className="parent">
+        <form className="form-container">
+          <DisplayImage imgClass={"image"} imageIndex={this.state.imageIndex} />
 
-    //check if location is from 'result' then reder input, questions conditionally
-    if (this.props.match.path === "/result") {
-      return <div className="App">{this.displayResult()}</div>;
-    } else {
-      return (
-        <div className="App">
-          {currQuestion.map(q => this.displayQuestion(q))}
-        </div>
-      );
-    }
+          <DisplayQuestion
+            questionClass={"question"}
+            question={this.state.question}
+          />
+
+          <DisplayAnswer
+            answerClass={"input"}
+            value={this.state.answer}
+            handleAnswer={this.handleAnswer}
+            ref={this._input}
+          />
+
+          <br />
+
+          {questionIndex > 0 && (
+            <button className={"back-btn"} onClick={this.handleBack}>
+              Back
+            </button>
+          )}
+
+          <button className={"next-btn"} onClick={this.handleNext}>
+            Next
+          </button>
+        </form>
+      </div>
+    );
   }
 }
 

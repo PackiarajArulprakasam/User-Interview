@@ -2,83 +2,110 @@
   text-align: center;
 }
 
-div.container {
-  position: relative;
-}
-
 .form-container {
   position: absolute;
   max-width: 700px;
   width: 100%;
   height: 90%;
-  border: 5px solid rgb(199, 131, 199);
+  border: 5px solid rgb(216, 149, 216);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  text-align: center;
+}
+.summary-container {
+  margin-top: 50px;
+  text-align: center;
+  padding-top: 100px;
+  height: 80%;
+}
+
+h3 {
+  background-color: rgb(255, 174, 0);
+  color: white;
+  padding: 10px 0px 10px 0px;
+  width: 90%;
+  margin-left: 5%;
+  border-radius: 5px;
+  margin-bottom: 50px;
+}
+.summary {
+  list-style-type: none;
+  width: 500px;
+  height: 40px;
+  padding: 5px;
+  color: white;
+  border-radius: 5px;
+  background-color: rgba(57, 150, 64, 0.712);
+  margin-bottom: 10px;
+  margin-left: 14%;
 }
 
 .image {
   height: 100px;
   width: 100px;
-  margin: 180px 0px 50px 0px;
-  position: relative;
+  margin-top: 150px;
 }
 
-.div.input-btn {
-  max-width: 700px;
-  position: relative;
-}
-
-.div.input-btn.question {
+.question {
   max-width: 500px;
-  height: 40px;
-  width: 100%;
-  margin-right: 0px;
-  background-color: pink;
+  height: 45px;
+  width: 80%;
+  margin-top: 40px;
+  margin-left: 13.5%;
+  padding: 5px;
+  background-color: rgb(115, 146, 233);
+  border-radius: 5px;
+  color: white;
   box-sizing: border-box;
 }
 
-.userInput {
+input {
   max-width: 500px;
   width: 100%;
   height: 40px;
-  margin: 40px 0px 40px 0px;
+  margin-top: 30px;
   font-size: 16px;
-  border: 5px soid rgb(79, 65, 155);
+  border: 5px soid blue;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 .back-btn,
 .next-btn {
   height: 40px;
   width: 80px;
+  margin-top: 40px;
   border-radius: 3px;
   position: relative;
 }
 .back-btn {
   background-color: rgb(233, 179, 179);
   border: 5px solid indianred;
+  float: left;
+  margin-left: 13.5%;
 }
 
 .next-btn {
   background-color: rgb(181, 238, 181);
   border: 5px solid rgb(75, 161, 75);
+  float: right;
+  margin-right: 13.5%;
 }
 
-.App .form-container .input-btn .back-btn {
-  float: left;
+.App .form-container .back-btn {
   margin-left: 100px;
 }
-.App .form-container .input-btn .next-btn {
-  float: right;
+.App .form-container .next-btn {
   margin-right: 100px;
 }
 
 @media screen and (max-width: 375px) {
-  .App .form-container .input-btn .back-btn {
+  .App .form-container .back-btn {
     float: left;
     margin-left: 0%;
   }
-  .App .form-container .input-btn .next-btn {
+  .App .form-container .next-btn {
     float: right;
     margin-left: 0%;
   }

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { questions } from "./questions";
+import { questions } from "./data/questions";
 
 class Quiz extends Component {
   constructor(props) {
@@ -83,8 +83,6 @@ class Quiz extends Component {
 
   //Display page for questions
   displayQuestion = q => {
-    const { userInput } = this.state;
-
     //get the image
     const logo = require("" + this.props.image);
 
